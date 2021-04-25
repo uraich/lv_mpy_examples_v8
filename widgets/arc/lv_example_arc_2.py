@@ -5,17 +5,19 @@ import display_driver
 #
 # An `lv_timer` to call periodically to set the angles of the arc
 #
-def arc_loader(tim):
-    a = 270
-    a+=5;
+class ArcLoader():
+    def __init__(self):
+        self.a = 270
+        
+    def arc_loader_cb(self,tim,arc):
+        print(tim,arc)
+        self.a += 5
 
-    #arc.set_end_angle(t->user_data, a);
+        arc.set_end_angle(self.a)
 
-    if a >= 270 + 360:
-        lv.timer.delete(tim)
+        if self.a >= 270 + 360:
+            tim._del()
 
-def timer_cb(src):
-    print(type(src))
 
 #
 # Create an arc which acts as a loader.
@@ -27,10 +29,13 @@ arc.set_bg_angles(0, 360)
 arc.set_angles(270, 270)
 arc.center()
 
+# create the loader
+arc_loader = ArcLoader()
+
 # Create an `lv_timer` to update the arc.
 
 timer = lv.timer_create_basic()
-timer.set_period(500)
-timer.set_cb(timer_cb())
+timer.set_period(20)
+timer.set_cb(lambda src: arc_loader.arc_loader_cb(timer,arc))
   
 
