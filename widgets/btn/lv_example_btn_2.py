@@ -8,8 +8,7 @@ import display_driver
 #
 
 trans = lv.style_transition_dsc_t()
-#props = [lv.STYLE.OUTLINE_WIDTH, lv.STYLE.OUTLINE_OPA, 0]
-#trans.init(props,lv.anim_t.path_linear,300,0)
+trans.init(trans,lv.anim_t.path_linear,300,0)
 
 style = lv.style_t()
 style.init()
