@@ -11,15 +11,6 @@ def event_handler(evt):
     elif code == lv.EVENT.VALUE_CHANGED:
         print("Value changed seen")
         
-level= 4
-log_level=["Trace", "Info", "Warning", "Error", "User"]
-#lv.log_register_print_cb(lambda level,filename,func,msg: print('LOG: %s, file: %s in %s, line %d: %s' % (log_level[level], filename, func,  msg)))           
-lv.log_register_print_cb(lambda lvl,msg: print("LOG: " + log_level[lvl] + msg))
-
-lv.log(4,"Hello")
-
-# log = lv.log((lambda level,filename,line,func,msg: print('LOG: %s, file: %s in %s, line %d: %s' % (log_level[level], filename, func, line, msg)))
-#lv.log_add("User","Hello")
 # create a simple button
 btn1 = lv.btn(lv.scr_act())
 
