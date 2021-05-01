@@ -3,6 +3,7 @@ import time
 import lvgl as lv
 import display_driver
 
+'''
 _LV_COORD_TYPE_SHIFT = 13
 _LV_COORD_TYPE_SPEC = 1 << _LV_COORD_TYPE_SHIFT
 
@@ -14,7 +15,7 @@ def LV_PCT(x):
         return  LV_COORD_SET_SPEC(1000 - x)
     else:
         return LV_COORD_SET_SPEC(x)
-    
+'''    
 #
 # A simple row and a column layout with flexbox
 #
@@ -34,7 +35,7 @@ cont_col.set_flex_flow(lv.FLEX_FLOW.COLUMN)
 for i in range(10):
     # Add items to the row
     obj = lv.btn(cont_row)
-    obj.set_size(100, LV_PCT(100))
+    obj.set_size(100, lv.pct(100))
 
     label = lv.label(obj)
     label.set_text("Item: {:d}".format(i))
@@ -42,7 +43,7 @@ for i in range(10):
 
     # Add items to the column
     obj = lv.btn(cont_col)
-    obj.set_size(LV_PCT(100), lv.SIZE.CONTENT)
+    obj.set_size(lv.pct(100), lv.SIZE.CONTENT)
 
     label = lv.label(obj)
     label.set_text("Item: {:d}".format(i))
