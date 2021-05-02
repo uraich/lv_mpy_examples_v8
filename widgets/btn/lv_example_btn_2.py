@@ -8,7 +8,8 @@ import display_driver
 #
 
 trans = lv.style_transition_dsc_t()
-trans.init(trans,lv.anim_t.path_linear,300,0)
+props = [lv.STYLE.OUTLINE_WIDTH, lv.STYLE.OUTLINE_OPA, 0]
+trans.init(props,lv.anim_t.path_linear,300,0)
 
 style = lv.style_t()
 style.init()
@@ -49,7 +50,7 @@ style_pr.set_bg_color( lv.palette_darken(lv.PALETTE.BLUE, 2))
 style_pr.set_bg_grad_color(lv.palette_darken(lv.PALETTE.BLUE,4))
 
 btn1 = lv.btn(lv.scr_act())
-#    lv_obj_remove_style(btn1, LV_PART_ANY, LV_STATE_ANY, NULL);
+# btn1.remove_style(lv.PART.ANY, lv.STATE.ANY, None)
 btn1.add_style(style, 0)
 btn1.add_style(style_pr, lv.STATE.PRESSED)
 btn1.set_size(lv.SIZE.CONTENT, lv.SIZE.CONTENT)
