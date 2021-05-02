@@ -12,7 +12,6 @@ def event_handler(e):
             state =  "Checked"
         else:
             state = "Unchecked";
-        # LV_LOG_USER("%s: %s\n", txt, state);
         print(txt + ":" + state)
 
 

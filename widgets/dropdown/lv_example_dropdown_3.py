@@ -26,7 +26,6 @@ def event_cb(e):
     dropdown = lv.dropdown.__cast__(e.get_target())
     option = " "*64 # should be large enough to store the option
     dropdown.get_selected_str(option, len(option))
-    # LV_LOG_USER("'%s' is selected", buf);
     print(option.strip() +" is selected")
 #
 # Create a menu from a drop-down list and show some drop-down list features and styling

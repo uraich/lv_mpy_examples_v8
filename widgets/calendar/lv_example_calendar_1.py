@@ -11,7 +11,6 @@ def event_handler(evt):
         date = lv.calendar_date_t()
         lv.calendar.get_pressed_date(source,date)
         if date:
-            #LV_LOG_USER("Clicked date: %02d.%02d.%d", date.day, date.month, date.year);
              print("Clicked date: %02d.%02d.%02d"%(date.day, date.month, date.year))
                 
 

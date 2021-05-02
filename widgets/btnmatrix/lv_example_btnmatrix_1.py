@@ -12,7 +12,6 @@ def event_handler(evt):
         txt = obj.get_btn_text(id)
 
         print("%s was pressed"%txt)
-        # _LOG_USER("%s was pressed\n", txt);
 
 btnm_map = ["1", "2", "3", "4", "5", "\n",
             "6", "7", "8", "9", "0", "\n",

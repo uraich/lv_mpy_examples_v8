@@ -11,7 +11,6 @@ def event_handler(e):
         obj.get_selected_str(option, len(option))
         # .strip() removes trailing spaces
         print("Option: \"%s\"" % option.strip())
-        # LV_LOG_USER("Option: %s", buf);
 
 # Create a normal drop down list
 dd = lv.dropdown(lv.scr_act())
