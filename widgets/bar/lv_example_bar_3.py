@@ -8,10 +8,6 @@ LV_ANIM_REPEAT_INFINITE = -1
 
 def set_temp(bar, temp):
     bar.set_value(temp, lv.ANIM.ON)
-#    static char buf[10];               /*Only the pointer t saved so must be static*/
-#    lv_snprintf(buf, sizeof(buf), "%d°C", temp);
-#    lv_obj_set_style_content_text(bar, LV_PART_INDICATOR, LV_STATE_DEFAULT, buf);
-
 
 #
 # A temperature meter example
