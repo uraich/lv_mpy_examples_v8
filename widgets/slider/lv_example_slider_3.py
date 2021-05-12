@@ -11,22 +11,22 @@ def slider_event_cb(e):
 
     # Provide some extra space for the value
     if code == lv.EVENT.REFR_EXT_DRAW_SIZE:
-        print("REFR_EXT_DRAW_SIZE")
-        ptr = lv.C_Pointer()
-        ptr.ptr_val = e.get_param()
-        print(ptr.int_val)
+        #print("REFR_EXT_DRAW_SIZE")
+        ptr = lv.C_Pointer.cast(e.get_param())
+        #ptr.ptr_val = e.get_param()
+        print("size: ",ptr.int_val)
         # size = int.cast(e.get_param())
         # size = max(size,50)
 
     elif code == lv.EVENT.DRAW_PART_END:
-        print("DRAW_PART_END")
-        dsc = lv.obj_draw_dsc_t.cast(e.get_param())
-        print(dsc)
+        # print("DRAW_PART_END")
+        dsc = lv.obj_draw_part_dsc_t.cast(e.get_param())
+        # print(dsc)
         if dsc.part == lv.PART.INDICATOR:
             label_text = "{:d} - {:d}".format(obj.get_left_value(),slider.get_value())
             label_size = lv.point_t()
             lv.txt_get_size(label_size, label_text, LV_FONT_DEFAULT, 0, 0, lv.COORD.MAX, 0)
-            print(label_size.x,label_size.y)
+            # print(label_size.x,label_size.y)
             label_area = lv.area_t()
             label_area.x1 = dsc.draw_area.x1 + dsc.draw_area.get_width() // 2 - label_size.x // 2
             label_area.x2 = label_area.x1 + label_size.x

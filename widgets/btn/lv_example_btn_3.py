@@ -1,23 +1,25 @@
-#!//opt/bin/lv_micropython -i
+#!/opt/bin/lv_micropython -i
 import time
 import lvgl as lv
 import display_driver
+from lv_colors import lv_colors
 
 #
 # Create a style transition on a button to act like a gum when clicked
 #
+
 # Properties to transition
 props = [lv.STYLE.TRANSFORM_WIDTH, lv.STYLE.TRANSFORM_HEIGHT, lv.STYLE.TEXT_LETTER_SPACE, 0]
 
 # Transition descriptor when going back to the default state.
-# Add some delay to be sure the press transition is visible even if the press was very short
+# Add some delay to be sure the press transition is visible even if the press was very short*/
 transition_dsc_def = lv.style_transition_dsc_t()
-transition_dsc_def.init(props, lv.anim_t.path_overshoot, 250, 100)
+transition_dsc_def.init(props, lv.anim_t.path_overshoot, 250, 100, None)
 
 # Transition descriptor when going to pressed state.
 # No delay, go to presses state immediately
 transition_dsc_pr = lv.style_transition_dsc_t()
-transition_dsc_pr.init(props, lv.anim_t.path_ease_in_out, 250, 0)
+transition_dsc_pr.init(props, lv.anim_t.path_ease_in_out, 250, 0, None)
 
 # Add only the new transition to he default state
 style_def = lv.style_t()
@@ -38,5 +40,5 @@ btn1.add_style(style_pr, lv.STATE.PRESSED)
 btn1.add_style(style_def, 0)
 
 label = lv.label(btn1)
-label.set_text("Gum")
+label.set_text("Gum");
 

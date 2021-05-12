@@ -10,7 +10,7 @@ class ArcLoader():
         self.a = 270
         
     def arc_loader_cb(self,tim,arc):
-        print(tim,arc)
+        # print(tim,arc)
         self.a += 5
 
         arc.set_end_angle(self.a)

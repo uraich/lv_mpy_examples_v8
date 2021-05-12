@@ -6,7 +6,6 @@ import display_driver
 ITEM_CNT = 200
 
 def draw_event_cb(e):
-{
     obj = lv.table.__cast__(e.get_target())
     dsc = lv_obj_draw_dsc_t.cast(e.get_param())
     # If the cells are drawn...
@@ -59,46 +58,41 @@ static void change_event_cb(lv_event_t * e)
 #
 
 # Measure memory usage
-mon1 = lv.mem_monitor_t)
-lv.mem_monitor(mon1)
+mon1 = lv.mem_monitor_t()
+mon1.mem_monitor()
 
 t = lv.tick_get()
 
-table = lv_table_create(lv.scr_act())
+table = lv.table(lv.scr_act())
 
-    /*Set a smaller height to the table. It'll make it scrollable*/
-    lv_obj_set_size(table, 150, 200);
+# Set a smaller height to the table. It'll make it scrollable
+table.set_size(150, 200)
 
-    lv_table_set_col_width(table, 0, 150);
-    lv_table_set_row_cnt(table, ITEM_CNT); /*Not required but avoids a lot of memory reallocation lv_table_set_set_value*/
-    lv_table_set_col_cnt(table, 1);
+table.set_col_width(0, 150)
+table.set_row_cnt(ITEM_CNT)  # Not required but avoids a lot of memory reallocation lv_table_set_set_value
+table.set_col_cnt(1)
 
-    /*Don't make the cell pressed, we will draw something different in the event*/
-    lv_obj_remove_style(table, NULL, LV_PART_ITEMS | LV_STATE_PRESSED);
+# Don't make the cell pressed, we will draw something different in the event
+table.remove_style(None, lv.PART.ITEMS | lv.STATE.PRESSED)
 
-    uint32_t i;
-    for(i = 0; i < ITEM_CNT; i++) {
-        lv_table_set_cell_value_fmt(table, i, 0, "Item %d", i + 1);
-    }
+for i in range(ITEM_CNT):
+    table.set_cell_value(i, 0, "Item " * str(i), i + 1)
 
-    lv_obj_align(table, LV_ALIGN_CENTER, 0, -20);
+table.align(lv.ALIGN.CENTER, 0, -20);
 
-    /*Add an event callback to to apply some custom drawing*/
-    lv_obj_add_event_cb(table, draw_event_cb, LV_EVENT_DRAW_PART_END, NULL);
-    lv_obj_add_event_cb(table, change_event_cb, LV_EVENT_VALUE_CHANGED, NULL);
+# Add an event callback to to apply some custom drawing
+# table.add_event_cb(draw_event_cb, lv.EVENT.DRAW_PART_END, None)
+# table.add_event_cb(change_event_cb, lv.EVENT.VALUE_CHANGED, None)
 
-    lv_mem_monitor_t mon2;
-    lv_mem_monitor(&mon2);
+mon2 = lv.mem_monitor_t()
+lv..mem_monitor(mon2)
 
-    uint32_t mem_used = mon1.free_size - mon2.free_size;
+mem_used = mon1.free_size - mon2.free_size;
 
-    uint32_t elaps = lv_tick_elaps(t);
+elaps = lv.tick_elaps(t)
 
-    lv_obj_t * label = lv_label_create(lv_scr_act());
-    lv_label_set_text_fmt(label, "%d items were created in %d ms\n"
-                                  "using %d bytes of memory",
-                                  ITEM_CNT, elaps, mem_used);
+label = lv.label(lv.scr_act())
+label.set_text(str(ITEM_CNT) + " items were created in " + str(elaps) + " ms\n using " + str(mem_used) + "bytes of memory")
 
-    lv_obj_align(label, LV_ALIGN_BOTTOM_MID, 0, -10);
+label.align(lv.ALIGN.BOTTOM_MID, 0, -10)
 
-}

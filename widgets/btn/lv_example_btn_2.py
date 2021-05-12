@@ -1,56 +1,59 @@
-#!//opt/bin/lv_micropython -i
-import time
+#!/opt/bin/lv_micropython -i
 import lvgl as lv
 import display_driver
+from lv_colors import lv_colors
 
 #
 # Style a button from scratch
 #
 
-trans = lv.style_transition_dsc_t()
-props = [lv.STYLE.OUTLINE_WIDTH, lv.STYLE.OUTLINE_OPA, 0]
-trans.init(props,lv.anim_t.path_linear,300,0)
-
+# Init the style for the default state
 style = lv.style_t()
 style.init()
+
+style.set_radius(3)
+
+style.set_bg_opa(lv.OPA.COVER)
+style.set_bg_color(lv.palette_main(lv.PALETTE.BLUE))
+style.set_bg_grad_color(lv.palette_darken(lv.PALETTE.BLUE, 2))
+style.set_bg_grad_dir(lv.GRAD_DIR.VER)
+
+style.set_border_opa(lv.OPA._40)
+style.set_border_width(2)
+style.set_border_color(lv.palette_main(lv.PALETTE.GREY))
+
+style.set_shadow_width(8)
+style.set_shadow_color(lv.palette_main(lv.PALETTE.GREY))
+style.set_shadow_ofs_y(8)
+
 style.set_outline_opa(lv.OPA.COVER)
 style.set_outline_color(lv.palette_main(lv.PALETTE.BLUE))
 
-style_pr = lv.style_t()
-style_pr.init()
-style_pr.set_outline_width(30)
-style_pr.set_outline_opa(lv.OPA.TRANSP)
-style_pr.set_transition(trans)
-
-#
-#    /*Init the default style*/
-#    lv_style_set_radius(&style, 3);
-#
-#    lv_style_set_bg_opa(&style, LV_OPA_100);
-#    lv_style_set_bg_color(&style, lv_color_blue());
-#    lv_style_set_bg_grad_color(&style, lv_color_blue_darken_2());
-#    lv_style_set_bg_grad_dir(&style, LV_GRAD_DIR_VER);
-#
-#    lv_style_set_border_opa(&style, LV_OPA_40);
-#    lv_style_set_border_width(&style, 2);
-#    lv_style_set_border_color(&style, lv_color_grey());
-#
-#    lv_style_set_shadow_width(&style, 8);
-#    lv_style_set_shadow_color(&style, lv_color_grey());
-#    lv_style_set_shadow_ofs_y(&style, 8);
-#
-#    lv_style_set_text_color(&style, lv_color_white());
-#
-#    lv_style_set_pad_all(&style, 10);
-#    lv_style_set_pad_all(&style_pr, 40);
+style.set_text_color(lv_colors.WHITE)
+style.set_pad_all(10)
 
 # Init the pressed style
+style_pr = lv.style_t()
+style_pr.init()
+
+# Add a large outline when pressed
+style_pr.set_outline_width(30)
+style_pr.set_outline_opa(lv.OPA.TRANSP)
+
+style_pr.set_translate_y(5)
 style_pr.set_shadow_ofs_y(3)
-style_pr.set_bg_color( lv.palette_darken(lv.PALETTE.BLUE, 2))
-style_pr.set_bg_grad_color(lv.palette_darken(lv.PALETTE.BLUE,4))
+style_pr.set_bg_color(lv.palette_darken(lv.PALETTE.BLUE, 2))
+style_pr.set_bg_grad_color(lv.palette_darken(lv.PALETTE.BLUE, 4))
+
+# Add a transition to the the outline
+trans = lv.style_transition_dsc_t()
+props = [lv.STYLE.OUTLINE_WIDTH, lv.STYLE.OUTLINE_OPA, 0]
+trans.init(props, lv.anim_t.path_linear, 300, 0, None)
+
+style_pr.set_transition(trans)
 
 btn1 = lv.btn(lv.scr_act())
-# btn1.remove_style(lv.PART.ANY, lv.STATE.ANY, None)
+btn1.remove_style_all()                          # Remove the style coming from the theme
 btn1.add_style(style, 0)
 btn1.add_style(style_pr, lv.STATE.PRESSED)
 btn1.set_size(lv.SIZE.CONTENT, lv.SIZE.CONTENT)

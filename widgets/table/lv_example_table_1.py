@@ -5,7 +5,7 @@ import display_driver
 
 def draw_part_event_cb(e):
     obj = lv.table.__cast__(e.get_target())
-    dsc = lv.obj_draw_dsc_t.cast(e.get_param())
+    dsc = lv.obj_draw_part_dsc_t.cast(e.get_param())
     # If the cells are drawn../
     if dsc.part == lv.PART.ITEMS:
         row = dsc.id //  obj.get_col_cnt()

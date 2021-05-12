@@ -3,84 +3,76 @@ import time
 import lvgl as lv
 import display_driver
 
-static lv_obj_t * chart1;
-static lv_chart_series_t * ser1;
-static lv_chart_series_t * ser2;
-
 def draw_event_cb(e):
 
-    obj = e.get_target()
+    obj = lv.obj.__cast__(e.get_target())
 
     # Add the faded area before the lines are drawn
-    lv_obj_draw_dsc_t * dsc = lv_event_get_param(e);
-    if(dsc->part != LV_PART_ITEMS) return;
-    if(!dsc->p1 || !dsc->p2) return;
+    dsc = lv.obj_draw_part_dsc_t.cast(e.get_param())
+    if dsc.part != lv.PART.ITEMS:
+        return
+    if not dsc.p1 or not dsc.p2:
+        return
 
-    /*Add  a line mask that keeps the area below the line*/
-    lv_draw_mask_line_param_t line_mask_param;
-    lv_draw_mask_line_points_init(&line_mask_param, dsc->p1->x, dsc->p1->y, dsc->p2->x, dsc->p2->y, LV_DRAW_MASK_LINE_SIDE_BOTTOM);
-    int16_t line_mask_id = lv_draw_mask_add(&line_mask_param, NULL);
+    # Add  a line mask that keeps the area below the line
+    line_mask_param = lv.draw_mask_line_param_t()
+    line_mask_param.points_init(dsc.p1.x, dsc.p1.y, dsc.p2.x, dsc.p2.y, lv.DRAW_MASK_LINE_SIDE.BOTTOM)
+    # line_mask_id = line_mask_param.draw_mask_add(None)
+    line_mask_id = lv.draw_mask_add(line_mask_param, None)
+    # Add a fade effect: transparent bottom covering top
+    h = obj.get_height()
+    fade_mask_param = lv.draw_mask_fade_param_t()
+    fade_mask_param.init(obj.coords, lv.OPA.COVER, obj.get_coords().y1 + h // 8, lv.OPA.TRANSP,obj.get_coords().y2)
+    fade_mask_id = fade_mask_param.draw_mask_add(None)
 
-    /*Add a fade effect: transparent bottom covering top*/
-    lv_coord_t h = lv_obj_get_height(obj);
-    lv_draw_mask_fade_param_t fade_mask_param;
-    lv_draw_mask_fade_init(&fade_mask_param, &obj->coords, LV_OPA_COVER, obj->coords.y1 + h / 8, LV_OPA_TRANSP,obj->coords.y2);
-    int16_t fade_mask_id = lv_draw_mask_add(&fade_mask_param, NULL);
+    # Draw a rectangle that will be affected by the mask
+    draw_rect_dsc = lv.draw_rect_dsc_t()
+    draw_rect_dsc.init()
+    draw_rect_dsc.bg_opa = lv.OPA._20
+    draw_rect_dsc.bg_color = dsc.line_dsc.color
 
-    /*Draw a rectangle that will be affected by the mask*/
-    lv_draw_rect_dsc_t draw_rect_dsc;
-    lv_draw_rect_dsc_init(&draw_rect_dsc);
-    draw_rect_dsc.bg_opa = LV_OPA_20;
-    draw_rect_dsc.bg_color = dsc->line_dsc->color;
+    a = lv_area_t()
+    a.x1 = dsc.p1.x
+    a.x2 = dsc.p2.x - 1
+    a.y1 = min(dsc.p1.y, dsc.p2.y)
+    a.y2 = obj.coords.y2
+    lv.draw_rect(a, dsc.clip_area, draw_rect_dsc)
 
-    lv_area_t a;
-    a.x1 = dsc->p1->x;
-    a.x2 = dsc->p2->x - 1;
-    a.y1 = LV_MIN(dsc->p1->y, dsc->p2->y);
-    a.y2 = obj->coords.y2;
-    lv_draw_rect(&a, dsc->clip_area, &draw_rect_dsc);
+    # Remove the masks
+    lv.draw_mask_remove_id(line_mask_id)
+    lv.draw_mask_remove_id(fade_mask_id)
 
-    /*Remove the masks*/
-    lv_draw_mask_remove_id(line_mask_id);
-    lv_draw_mask_remove_id(fade_mask_id);
-}
 
-static void add_data(lv_timer_t * timer)
-{
-    LV_UNUSED(timer);
-    static uint32_t cnt = 0;
-    lv_chart_set_next_value(chart1, ser1, lv_rand(20, 90));
+def add_data(timer):
+    # LV_UNUSED(timer);
+    cnt = 0;
+    char1.set_next_value(ser1, lv.rand(20, 90))
 
-    if(cnt % 4 == 0) lv_chart_set_next_value(chart1, ser2, lv_rand(40, 60));
+    if cnt % 4 == 0:
+        chart1.set_next_value(ser2, lv_rand(40, 60))
 
-    cnt++;
-}
+    cnt +=1
 
-/**
- * Add a faded area effect to the line chart
- */
-void lv_example_chart_2(void)
-{
-    /*Create a chart1*/
-    chart1 = lv_chart_create(lv_scr_act());
-    lv_obj_set_size(chart1, 200, 150);
-    lv_obj_center(chart1);
-    lv_chart_set_type(chart1, LV_CHART_TYPE_LINE);   /*Show lines and points too*/
+#
+# Add a faded area effect to the line chart
+#
 
-    lv_obj_add_event_cb(chart1, draw_event_cb, LV_EVENT_DRAW_PART_BEGIN, NULL);
-    lv_chart_set_update_mode(chart1, LV_CHART_UPDATE_MODE_CIRCULAR);
+# Create a chart1
+chart1 = lv.chart(lv.scr_act())
+chart1.set_size(200, 150)
+chart1.center()
+chart1.set_type(lv.chart.TYPE.LINE)    # Show lines and points too
 
-    /*Add two data series*/
-    ser1 = lv_chart_add_series(chart1, lv_palette_main(LV_PALETTE_RED), LV_CHART_AXIS_PRIMARY_Y);
-    ser2 = lv_chart_add_series(chart1, lv_palette_main(LV_PALETTE_BLUE), LV_CHART_AXIS_SECONDARY_Y);
+chart1.add_event_cb(draw_event_cb, lv.EVENT.DRAW_PART_BEGIN, None)
+chart1.set_update_mode(lv.chart.UPDATE_MODE.CIRCULAR)
 
-    uint32_t i;
-    for(i = 0; i < 10; i++) {
-        lv_chart_set_next_value(chart1, ser1, lv_rand(20, 90));
-        lv_chart_set_next_value(chart1, ser2, lv_rand(30, 70));
-    }
+# Add two data series
+ser1 = chart1.add_series(lv.palette_main(lv.PALETTE.RED), lv.chart.AXIS.PRIMARY_Y)
+ser2 = chart1.add_series(lv.palette_main(lv.PALETTE.BLUE), lv.chart.AXIS.SECONDARY_Y)
 
-    lv_timer_create(add_data, 200, NULL);
-}
+for i in range(10):
+    chart1.set_next_value(ser1, lv.rand(20, 90))
+    chart1.set_next_value(ser2, lv.rand(30, 70))
 
-#endif
+# timer = lv.timer_t(add_data, 200, None)
+

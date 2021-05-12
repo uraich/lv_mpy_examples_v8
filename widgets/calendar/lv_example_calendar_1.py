@@ -41,7 +41,7 @@ highlighted_days[2].day=22
 
 calendar.set_highlighted_dates(highlighted_days, 3)
 
-# header = lv.calendar_header_dropdown(lv.scr_act(),calendar)
-header = lv.calendar_header_arrow(lv.scr_act(),calendar,25)
+header = lv.calendar_header_dropdown(lv.scr_act(),calendar)
+# header = lv.calendar_header_arrow(lv.scr_act(),calendar,25)
 
 

@@ -11,7 +11,7 @@ LV_RADIUS_CIRCLE = 0x7FFF
 # Create a transition
 props = [lv.STYLE.BG_COLOR, 0]
 transition_dsc = lv.style_transition_dsc_t()
-transition_dsc.init(props, lv.anim_t.path_linear, 300, 0)
+transition_dsc.init(props, lv.anim_t.path_linear, 300, 0, None)
 
 style_main = lv.style_t()
 style_indicator =  lv.style_t()
