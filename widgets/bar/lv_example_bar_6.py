@@ -1,9 +1,7 @@
 #!/opt/bin/lv_micropython -i
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 
-LV_COORD_MAX = 24576
 LV_ANIM_REPEAT_INFINITE = -1
 
 def set_value(bar, v):
@@ -22,19 +20,19 @@ def event_cb(e):
 
     value_txt = str(obj.get_value())
     txt_size = lv.point_t()
-    lv.txt_get_size(txt_size, value_txt, label_dsc.font, label_dsc.letter_space, label_dsc.line_space, LV_COORD_MAX, label_dsc.flag)
+    lv.txt_get_size(txt_size, value_txt, label_dsc.font, label_dsc.letter_space, label_dsc.line_space, lv.COORD.MAX, label_dsc.flag)
 
     txt_area = lv.area_t()
     # If the indicator is long enough put the text inside on the right
     if dsc.draw_area.get_width() > txt_size.x + 20:
         txt_area.x2 = dsc.draw_area.x2 - 5
         txt_area.x1 = txt_area.x2 - txt_size.x + 1
-        label_dsc.color = lv_colors.WHITE
+        label_dsc.color = lv.color_white()
     # If the indicator is still short put the text out of it on the right*/
     else:
         txt_area.x1 = dsc.draw_area.x2 + 5
         txt_area.x2 = txt_area.x1 + txt_size.x - 1
-        label_dsc.color = lv_colors.BLACK
+        label_dsc.color = lv.color_black()
 
     txt_area.y1 = dsc.draw_area.y1 + (dsc.draw_area.get_height() - txt_size.y) // 2
     txt_area.y2 = txt_area.y1 + txt_size.y - 1

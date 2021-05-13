@@ -2,7 +2,6 @@
 import time
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 
 LV_ANIM_REPEAT_INFINITE = -1
 

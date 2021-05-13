@@ -2,7 +2,6 @@
 import lvgl as lv
 import display_driver
 import time
-from lv_colors import lv_colors
 
 #
 # Create styles from scratch for buttons.

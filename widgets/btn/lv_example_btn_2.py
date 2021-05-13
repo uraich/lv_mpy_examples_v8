@@ -1,7 +1,6 @@
 #!/opt/bin/lv_micropython -i
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 
 #
 # Style a button from scratch
@@ -29,7 +28,7 @@ style.set_shadow_ofs_y(8)
 style.set_outline_opa(lv.OPA.COVER)
 style.set_outline_color(lv.palette_main(lv.PALETTE.BLUE))
 
-style.set_text_color(lv_colors.WHITE)
+style.set_text_color(lv.color_white())
 style.set_pad_all(10)
 
 # Init the pressed style

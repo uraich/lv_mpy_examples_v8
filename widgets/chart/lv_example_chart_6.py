@@ -4,7 +4,6 @@ import lvgl as lv
 import display_driver
 
 LV_FONT_DEFAULT = lv.font_montserrat_14
-LV_COORD_MAX = 24576
 
 class ExampleChart_6():
     
@@ -72,7 +71,7 @@ class ExampleChart_6():
                 # lv_snprintf(buf, sizeof(buf), "%d", v);
                 value_txt = str(v)
                 size = lv_point_t()
-                lv.txt_get_size(size, value_txt, LV_FONT_DEFAULT, 0, 0, LV_COORD_MAX, lv.TEXT_FLAG.NONE)
+                lv.txt_get_size(size, value_txt, LV_FONT_DEFAULT, 0, 0, lv.COORD.MAX, lv.TEXT_FLAG.NONE)
                 
                 a = lv_area_t()
                 a.y2 = dsc.p1.y - 5
@@ -89,7 +88,7 @@ class ExampleChart_6():
                 
                 draw_label_dsc = lv.draw_label_dsc_t()
                 draw_label_dsc.init()
-                draw_label_dsc.color = lv_colors.WHITE
+                draw_label_dsc.color = lv.color_white()
                 a.x1 += 5
                 a.x2 -= 5
                 a.y1 += 5

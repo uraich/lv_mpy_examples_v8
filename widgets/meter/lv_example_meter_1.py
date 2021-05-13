@@ -2,7 +2,6 @@
 import time
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 
 LV_ANIM_REPEAT_INFINITE = -1
 
@@ -19,7 +18,7 @@ meter.set_size(200, 200)
 # Add a scale first
 scale = meter.add_scale()
 meter.set_scale_ticks(scale, 51, 2, 10, lv.palette_main(lv.PALETTE.GREY))
-meter.set_scale_major_ticks(scale, 10, 4, 15, lv_colors.BLACK, 10)
+meter.set_scale_major_ticks(scale, 10, 4, 15, lv.color_black(), 10)
 
 indic = lv.meter_indicator_t()
 

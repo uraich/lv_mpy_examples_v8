@@ -32,14 +32,14 @@ tile3 =  tv.add_tile(1, 1, lv.DIR.LEFT)
 list = lv.list(tile3)
 list.set_size(lv.pct(100), lv.pct(100))
 
-list.add_btn(None, "One", None);
-list.add_btn(None, "Two", None);
-list.add_btn(None, "Three", None);
-list.add_btn(None, "Four", None);
-list.add_btn(None, "Five", None);
-list.add_btn(None, "Six", None);
-list.add_btn(None, "Seven", None);
-list.add_btn(None, "Eight", None);
-list.add_btn(None, "Nine", None);
-list.add_btn(None, "Ten", None);
+list.add_btn(None, "One")
+list.add_btn(None, "Two")
+list.add_btn(None, "Three")
+list.add_btn(None, "Four")
+list.add_btn(None, "Five")
+list.add_btn(None, "Six")
+list.add_btn(None, "Seven")
+list.add_btn(None, "Eight")
+list.add_btn(None, "Nine")
+list.add_btn(None, "Ten")
 

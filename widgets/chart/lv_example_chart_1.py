@@ -2,7 +2,6 @@
 import time
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 
 # Create a chart
 chart = lv.chart(lv.scr_act())

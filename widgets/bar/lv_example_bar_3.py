@@ -2,7 +2,6 @@
 import time
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 
 LV_ANIM_REPEAT_INFINITE = -1
 
@@ -18,8 +17,8 @@ style_indic = lv.style_t()
 
 style_indic.init()
 style_indic.set_bg_opa(lv.OPA.COVER)
-style_indic.set_bg_color(lv_colors.RED)
-style_indic.set_bg_grad_color(lv_colors.BLUE)
+style_indic.set_bg_color(lv.palette_main(lv.PALETTE.RED))
+style_indic.set_bg_grad_color(lv.palette_main(lv.PALETTE.BLUE))
 style_indic.set_bg_grad_dir(lv.GRAD_DIR.VER)
 
 bar = lv.bar(lv.scr_act())

@@ -3,7 +3,6 @@ import sys
 import lvgl as lv
 import display_driver
 from imagetools import get_png_info, open_png
-from lv_colors import lv_colors
 
 # Register PNG image decoder
 decoder = lv.img.decoder_create()
@@ -54,14 +53,14 @@ tr.init(tr_prop, lv.anim_t.path_linear, 200, 0, None)
 
 style_def = lv.style_t()
 style_def.init()
-style_def.set_text_color(lv_colors.WHITE)
+style_def.set_text_color(lv.color_white())
 style_def.set_transition(tr)
 
 # Darken the button when pressed and make it wider
 style_pr = lv.style_t()
 style_pr.init()
 style_pr.set_img_recolor_opa(lv.OPA._30)
-style_pr.set_img_recolor(lv_colors.BLACK)
+style_pr.set_img_recolor(lv.color_black())
 style_pr.set_transform_width(20)
 
 # Create an image button

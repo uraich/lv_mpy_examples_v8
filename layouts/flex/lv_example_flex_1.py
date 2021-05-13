@@ -3,19 +3,6 @@ import time
 import lvgl as lv
 import display_driver
 
-'''
-_LV_COORD_TYPE_SHIFT = 13
-_LV_COORD_TYPE_SPEC = 1 << _LV_COORD_TYPE_SHIFT
-
-def LV_COORD_SET_SPEC(x):
-    return (x | _LV_COORD_TYPE_SPEC)
-
-def LV_PCT(x):
-    if x < 0:
-        return  LV_COORD_SET_SPEC(1000 - x)
-    else:
-        return LV_COORD_SET_SPEC(x)
-'''    
 #
 # A simple row and a column layout with flexbox
 #

@@ -2,7 +2,6 @@
 import sys
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 from imagetools import get_png_info, open_png
 
 _LV_RADIUS_CIRCLE = 0x7fff
@@ -41,7 +40,7 @@ def event_cb(e):
             dsc.rect_dsc.shadow_width = 6
             dsc.rect_dsc.shadow_ofs_x = 3
             dsc.rect_dsc.shadow_ofs_y = 3
-            dsc.label_dsc.color = lv_colors.WHITE
+            dsc.label_dsc.color = lv.color_white()
 
         # Change the draw descriptor the 3rd button
 
@@ -52,7 +51,7 @@ def event_cb(e):
             else:
                 dsc.rect_dsc.bg_color = lv.palette_main(lv.PALETTE.RED)
                 
-                dsc.label_dsc.color = lv_colors.WHITE
+                dsc.label_dsc.color = lv.color_white()
         elif dsc.id == 3:
             dsc.label_dsc.opa = lv.OPA.TRANSP  # Hide the text if any
 
@@ -75,7 +74,7 @@ def event_cb(e):
                 a.y2 = a.y1 + header.h - 1;
                 img_draw_dsc = lv.draw_img_dsc_t()
                 img_draw_dsc.init()
-                img_draw_dsc.recolor = lv_colors.BLACK
+                img_draw_dsc.recolor = lv.color_black()
                 if obj.get_selected_btn() == dsc.id:
                     img_draw_dsc.recolor_opa = lv.OPA._30
 

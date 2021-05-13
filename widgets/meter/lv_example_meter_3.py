@@ -2,7 +2,6 @@
 import time
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 from imagetools import get_png_info, open_png
 
 LV_ANIM_REPEAT_INFINITE = -1
@@ -57,7 +56,7 @@ meter.set_scale_range(scale_min, 0, 60, 360, 270)
 # Create an other scale for the hours. It's only visual and contains only major ticks
 scale_hour = meter.add_scale()
 meter.set_scale_ticks(scale_hour, 12, 0, 0, lv.palette_main(lv.PALETTE.GREY))  # 12 ticks
-meter.set_scale_major_ticks(scale_hour, 1, 2, 20, lv_colors.BLACK, 10)         # Every tick is major
+meter.set_scale_major_ticks(scale_hour, 1, 2, 20, lv.color_black(), 10)         # Every tick is major
 meter.set_scale_range(scale_hour, 1, 12, 330, 300)                             # [1..12] values in an almost full circle
 
 #    LV_IMG_DECLARE(img_hand)

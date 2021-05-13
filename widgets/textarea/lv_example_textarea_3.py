@@ -44,6 +44,7 @@ ta.set_accepted_chars("0123456789:")
 ta.set_max_length(5)
 ta.set_one_line(True)
 ta.set_text("")
+ta.add_state(lv.STATE.FOCUSED)
 
 # Create a keyboard
 kb = lv.keyboard(lv.scr_act())

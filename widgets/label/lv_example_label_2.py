@@ -2,7 +2,6 @@
 import time
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 #
 # Create a fake text shadow
 #
@@ -11,7 +10,7 @@ from lv_colors import lv_colors
 style_shadow = lv.style_t()
 style_shadow.init()
 style_shadow.set_text_opa(lv.OPA._30)
-style_shadow.set_text_color(lv_colors.BLACK)
+style_shadow.set_text_color(lv.color_black())
 
 # Create a label for the shadow first (it's in the background)
 shadow_label = lv.label(lv.scr_act())

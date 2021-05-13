@@ -2,7 +2,6 @@
 import time
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 
 _CANVAS_WIDTH  = 200
 _CANVAS_HEIGHT =  150
@@ -17,7 +16,7 @@ rect_dsc.bg_color = lv.palette_main(lv.PALETTE.RED)
 rect_dsc.bg_grad_color = lv.palette_main(lv.PALETTE.BLUE)
 rect_dsc.border_width = 2
 rect_dsc.border_opa = lv.OPA._90
-rect_dsc.border_color = lv_colors.WHITE
+rect_dsc.border_color = lv.color_white()
 rect_dsc.shadow_width = 5
 rect_dsc.shadow_ofs_x = 5
 rect_dsc.shadow_ofs_y = 5
@@ -45,5 +44,5 @@ img.header.cf = lv.img.CF.TRUE_COLOR
 img.header.w = _CANVAS_WIDTH
 img.header.h = _CANVAS_HEIGHT
 
-canvas.fill_bg(lv_colors.SILVER, lv.OPA.COVER)
+canvas.fill_bg(lv_palette_lighten(LV_PALETTE_GREY, 3), LV_OPA_COVER)
 canvas.transform(img, 30, LV_IMG_ZOOM_NONE, 0, 0, _CANVAS_WIDTH // 2, _CANVAS_HEIGHT // 2, True);

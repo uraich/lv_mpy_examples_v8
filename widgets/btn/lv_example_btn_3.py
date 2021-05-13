@@ -2,7 +2,6 @@
 import time
 import lvgl as lv
 import display_driver
-from lv_colors import lv_colors
 
 #
 # Create a style transition on a button to act like a gum when clicked

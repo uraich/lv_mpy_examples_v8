@@ -3,6 +3,9 @@ import time
 import lvgl as lv
 import display_driver
 
+def textarea_event_handler(e,ta):
+    print("Enter was pressed. The current text is: " + ta.get_text())
+    
 def btnm_event_handler(e,ta):
 
     obj = lv.btnmatrix.__cast__(e.get_target())
@@ -24,7 +27,7 @@ def btnm_event_handler(e,ta):
 ta = lv.textarea(lv.scr_act())
 ta.set_one_line(True)
 ta.align(lv.ALIGN.TOP_MID, 0, 10)
-
+ta.add_event_cb(lambda e: textarea_event_handler(e,ta), lv.EVENT.READY, None)
 ta.add_state(lv.STATE.FOCUSED)   # To be sure the cursor is visible
 
 btnm_map = ["1", "2", "3", "\n",

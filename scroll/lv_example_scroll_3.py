@@ -15,7 +15,7 @@ class ScrollExample_3():
         list.center()
 
         for btn_cnt in range(2):
-            list.add_btn(lv.SYMBOL.AUDIO,"Track {:d}".format(btn_cnt) , None)
+            list.add_btn(lv.SYMBOL.AUDIO,"Track {:d}".format(btn_cnt))
 
             float_btn = lv.btn(list)
             float_btn.set_size(50, 50)
@@ -31,7 +31,7 @@ class ScrollExample_3():
         float_btn = e.get_target()
 
         if code == lv.EVENT.CLICKED:
-            list_btn = list.add_btn(lv.SYMBOL.AUDIO, "Track {:d}".format(self.btn_cnt), None)
+            list_btn = list.add_btn(lv.SYMBOL.AUDIO, "Track {:d}".format(self.btn_cnt))
             self.btn_cnt += 1
 
             float_btn.move_foreground()
