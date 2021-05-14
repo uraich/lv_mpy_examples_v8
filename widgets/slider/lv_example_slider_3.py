@@ -12,9 +12,10 @@ def slider_event_cb(e):
     # Provide some extra space for the value
     if code == lv.EVENT.REFR_EXT_DRAW_SIZE:
         #print("REFR_EXT_DRAW_SIZE")
-        ptr = lv.C_Pointer.cast(e.get_param())
+        #ptr = lv.C_Pointer.cast(e.get_param())
         #ptr.ptr_val = e.get_param()
-        print("size: ",ptr.int_val)
+        size = e.get_ext_draw_size_info()
+        print("size: ",size)
         # size = int.cast(e.get_param())
         # size = max(size,50)
 
