@@ -6,17 +6,14 @@ import display_driver
 def ta_event_cb(e):
     code = e.get_code()
     ta = lv.textarea.__cast__(e.get_target())
-    if code == lv.EVENT.CLICKED:
+    if code == lv.EVENT.CLICKED or code == lv.EVENT.FOCUSED:
         # Focus on the clicked text area
         if kb != None:
             kb.set_textarea(ta)
 
-    elif code == lv.EVENT.INSERT:
-        pass
-        # print("insert")
-        # const char * str = e.get_param()
-        # if(str[0] == '\n') {
-        #    print("Ready\n");
+    elif code == lv.EVENT.READY:
+        print("Ready, current text: " + ta.get_text())
+
 
 # Create the password box
 LV_HOR_RES = lv.scr_act().get_disp().driver.hor_res

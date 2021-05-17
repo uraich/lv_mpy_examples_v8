@@ -13,16 +13,9 @@ def btnm_event_handler(e,ta):
     if txt == lv.SYMBOL.BACKSPACE:
         ta.del_char()
     elif txt == lv.SYMBOL.NEW_LINE:
-        ta.set_text("")
+        lv.event_send(ta,lv.EVENT.READY,None)
     else:
         ta.add_text(txt)
-
-'''
-    if(strcmp(txt, LV_SYMBOL_BACKSPACE) == 0) lv_textarea_del_char(ta);
-    else if(strcmp(txt, LV_SYMBOL_NEW_LINE) == 0) lv_textarea_add_char(ta, '\n');
-    else lv_textarea_add_text(ta, txt);
-'''
-
 
 ta = lv.textarea(lv.scr_act())
 ta.set_one_line(True)
