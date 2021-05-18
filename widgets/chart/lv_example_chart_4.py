@@ -11,51 +11,41 @@ def event_cb(e):
         chart.invalidate()
 
     if code == lv.EVENT.REFR_EXT_DRAW_SIZE:
-        p = lv.C_Pointer()
-        p.ptr_val = e.get_param()
-        print("s: ",p.int_val)
-        # s = e.get_param()
-        # *s = max(*s, 20)
+        e.set_ext_draw_size(20)
 
     elif code == lv.EVENT.DRAW_POST_END:
         id = lv.chart.get_pressed_point(chart)
         if id == lv.CHART_POINT.NONE:
             return
-        print("Selected point ", id)
-
-        ser = lv.chart.get_series_next(chart,None)
-        '''
-        while ser: 
+        # print("Selected point ", id)
+        for i in range(len(series)):
             p = lv.point_t()
-            chart.get_point_pos_by_id(ser, id, p)
-            print("id: ",id)
-            lv_coord_t * y_array = lv_chart_get_array(chart, ser);
-            lv_coord_t value = y_array[id];
-
-            char buf[16];
-            lv_snprintf(buf, sizeof(buf), LV_SYMBOL_DUMMY"$%d", value);
-        '''
-        value = ser1_p[id]
-        buf = lv.SYMBOL.DUMMY + "$" + str(value)
-        draw_rect_dsc = lv.draw_rect_dsc_t()
-        draw_rect_dsc.init()
-        draw_rect_dsc.bg_color = lv.color_black()
-        draw_rect_dsc.bg_opa = lv.OPA._50
-        draw_rect_dsc.radius = 3
-        draw_rect_dsc.bg_img_src = buf;
-        draw_rect_dsc.bg_img_recolor = lv.color_white()
-        
-        a = lv.area_t()
-        a.x1 = chart.coords.x1 + p.x - 20
-        a.x2 = chart.coords.x1 + p.x + 20
-        a.y1 = chart.coords.y1 + p.y - 30
-        a.y2 = chart.coords.y1 + p.y - 10
-        
-        clip_area = lv_area_t.cast(e.get_param())
-        lv.draw_rect(a, clip_area, draw_rect_dsc)
-        
-        # ser = lv_chart_get_series_next(chart, ser)
-
+            chart.get_point_pos_by_id(series[i], id, p)
+            value = series_points[i][id]
+            buf = lv.SYMBOL.DUMMY + "$" + str(value)
+            
+            draw_rect_dsc = lv.draw_rect_dsc_t()
+            draw_rect_dsc.init()
+            draw_rect_dsc.bg_color = lv.color_black()
+            draw_rect_dsc.bg_opa = lv.OPA._50
+            draw_rect_dsc.radius = 3
+            draw_rect_dsc.bg_img_src = buf;
+            draw_rect_dsc.bg_img_recolor = lv.color_white()
+            
+            a = lv.area_t()
+            coords = lv.area_t()
+            chart.get_coords(coords)
+            a.x1 = coords.x1 + p.x - 20
+            a.x2 = coords.x1 + p.x + 20
+            a.y1 = coords.y1 + p.y - 30
+            a.y2 = coords.y1 + p.y - 10
+            
+            clip_area = lv.area_t.cast(e.get_param())
+            lv.draw_rect(a, clip_area, draw_rect_dsc)
+            
+    elif code == lv.EVENT.RELEASED:
+        chart.invalidate()
+            
 # 
 # Add ticks and labels to the axis and demonstrate scrolling
 #
@@ -77,12 +67,12 @@ ser2 = chart.add_series(lv.palette_main(lv.PALETTE.GREEN), lv.chart.AXIS.PRIMARY
 
 ser1_p = []
 ser2_p = []
-series = [ser1_p,ser2_p]
-
 for i in range(10):
     ser1_p.append(lv.rand(60,90))
     ser2_p.append(lv.rand(10,40))
 ser1.points = ser1_p
 ser2.points = ser2_p
 
+series = [ser1,ser2]
+series_points=[ser1_p,ser2_p]
 

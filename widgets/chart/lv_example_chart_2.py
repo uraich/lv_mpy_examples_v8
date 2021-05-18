@@ -22,8 +22,10 @@ def draw_event_cb(e):
     # Add a fade effect: transparent bottom covering top
     h = obj.get_height()
     fade_mask_param = lv.draw_mask_fade_param_t()
-    fade_mask_param.init(obj.coords, lv.OPA.COVER, obj.get_coords().y1 + h // 8, lv.OPA.TRANSP,obj.get_coords().y2)
-    fade_mask_id = fade_mask_param.draw_mask_add(None)
+    coords = lv.area_t()
+    obj.get_coords(coords)
+    fade_mask_param.init(coords, lv.OPA.COVER, coords.y1 + h // 8, lv.OPA.TRANSP,coords.y2)
+    fade_mask_id = lv.draw_mask_add(fade_mask_param,None)
 
     # Draw a rectangle that will be affected by the mask
     draw_rect_dsc = lv.draw_rect_dsc_t()
@@ -31,11 +33,13 @@ def draw_event_cb(e):
     draw_rect_dsc.bg_opa = lv.OPA._20
     draw_rect_dsc.bg_color = dsc.line_dsc.color
 
-    a = lv_area_t()
+    a = lv.area_t()
     a.x1 = dsc.p1.x
     a.x2 = dsc.p2.x - 1
     a.y1 = min(dsc.p1.y, dsc.p2.y)
-    a.y2 = obj.coords.y2
+    coords = lv.area_t()
+    obj.get_coords(coords)
+    a.y2 = coords.y2
     lv.draw_rect(a, dsc.clip_area, draw_rect_dsc)
 
     # Remove the masks
