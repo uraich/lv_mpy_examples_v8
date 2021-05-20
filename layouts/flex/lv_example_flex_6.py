@@ -9,7 +9,7 @@ import display_driver
 #
 
 cont = lv.obj(lv.scr_act())
-cont.set_base_dir(lv.BIDI_DIR.RTL)
+cont.set_style_base_dir(lv.BASE_DIR.RTL,0)
 cont.set_size(300, 220)
 cont.center()
 cont.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)

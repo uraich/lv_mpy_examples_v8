@@ -26,9 +26,11 @@ class ExampleChart_6():
         self.cursor = chart.add_cursor(lv.palette_main(lv.PALETTE.BLUE), lv.DIR.LEFT | lv.DIR.BOTTOM)
         
         self.ser = chart.add_series(lv.palette_main(lv.PALETTE.RED), lv.chart.AXIS.PRIMARY_Y)
-        
+
+        self.ser_p = []
         for i in range(10):
-            chart.set_next_value(self.ser, lv.rand(10,90))
+            self.ser_p.append(lv.rand(10,90))
+        self.ser.points = self.ser_p                     
 
         newser = chart.get_series_next(None)
         print("length of data points: ",len(newser.points))
@@ -50,30 +52,25 @@ class ExampleChart_6():
             if self.last_id != lv.CHART_POINT.NONE:
                 p = lv.point_t()
                 chart.get_point_pos_by_id(self.ser, self.last_id, p)
-                chart.set_cursor_point(self.cursor, p)
+                chart.set_cursor_point(self.cursor, None, self.last_id)
                 
         elif code == lv.EVENT.DRAW_PART_END:
-            print("EVENT.DRAW_PART_END")
+            # print("EVENT.DRAW_PART_END")
             dsc = lv.obj_draw_part_dsc_t.cast(e.get_param())
             if dsc.p1 and dsc.p2:
                 print("p1, p2", dsc.p1,dsc.p2)
                 print("p1.y, p2.y", dsc.p1.y, dsc.p2.y)
                 print("last_id: ",self.last_id)
             if dsc.part == lv.PART.CURSOR and dsc.p1 and dsc.p2 and dsc.p1.y == dsc.p2.y and self.last_id >= 0:
-                #data_array = chart.get_array(self.ser)
-                print("ser: ",self.ser)
-                print("Length of ser: ",len(self.ser.points))
-                '''
-                #print(type(data_array),len(data_array))
-                v = data_array[self.last_id];
+
+                v = self.ser_p[self.last_id];
      
                 print("value: ",v)
-                # lv_snprintf(buf, sizeof(buf), "%d", v);
                 value_txt = str(v)
-                size = lv_point_t()
+                size = lv.point_t()
                 lv.txt_get_size(size, value_txt, LV_FONT_DEFAULT, 0, 0, lv.COORD.MAX, lv.TEXT_FLAG.NONE)
                 
-                a = lv_area_t()
+                a = lv.area_t()
                 a.y2 = dsc.p1.y - 5
                 a.y1 = a.y2 - size.y - 10
                 a.x1 = dsc.p1.x + 10;
@@ -94,5 +91,5 @@ class ExampleChart_6():
                 a.y1 += 5
                 a.y2 -= 5
                 lv.draw_label(a, dsc.clip_area, draw_label_dsc, value_txt, None)
-                '''
+
 example_chart_6 = ExampleChart_6()
