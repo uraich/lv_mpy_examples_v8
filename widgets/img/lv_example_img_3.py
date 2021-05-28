@@ -4,8 +4,6 @@ import lvgl as lv
 import display_driver
 from imagetools import get_png_info, open_png
 
-LV_ANIM_REPEAT_INFINITE = -1
-
 # Register PNG image decoder
 decoder = lv.img.decoder_create()
 decoder.info_cb = get_png_info
@@ -47,7 +45,7 @@ a1.set_var(img)
 a1.set_custom_exec_cb(lambda a,val: set_angle(img,val))
 a1.set_values(0, 3600)
 a1.set_time(5000)
-a1.set_repeat_count(LV_ANIM_REPEAT_INFINITE)
+a1.set_repeat_count(lv.ANIM_REPEAT.INFINITE)
 lv.anim_t.start(a1)
 
 a2 = lv.anim_t()

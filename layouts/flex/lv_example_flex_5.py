@@ -3,8 +3,6 @@ import time
 import lvgl as lv
 import display_driver
 
-LV_ANIM_REPEAT_INFINITE = -1
-
 def row_gap_anim(obj, v):
     obj.set_style_pad_row(v, 0)
 
@@ -33,7 +31,7 @@ a_row = lv.anim_t()
 a_row.init()
 a_row.set_var(cont)
 a_row.set_values(0, 10)
-a_row.set_repeat_count(LV_ANIM_REPEAT_INFINITE)
+a_row.set_repeat_count(lv.ANIM_REPEAT.INFINITE)
 
 a_row.set_time(500)
 a_row.set_playback_time(500)
@@ -44,7 +42,7 @@ a_col = lv.anim_t()
 a_col.init()
 a_col.set_var(cont)
 a_col.set_values(0, 10)
-a_col.set_repeat_count(LV_ANIM_REPEAT_INFINITE)
+a_col.set_repeat_count(lv.ANIM_REPEAT.INFINITE)
 
 a_col.set_time(3000)
 a_col.set_playback_time(3000)

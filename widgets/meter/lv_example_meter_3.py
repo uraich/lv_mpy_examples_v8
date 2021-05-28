@@ -4,8 +4,6 @@ import lvgl as lv
 import display_driver
 from imagetools import get_png_info, open_png
 
-LV_ANIM_REPEAT_INFINITE = -1
-
 # Register PNG image decoder
 decoder = lv.img.decoder_create()
 decoder.info_cb = get_png_info
@@ -69,7 +67,7 @@ indic_hour = meter.add_needle_img(scale_min, img_hand_hour_dsc, 5, 5)
 a1 = lv.anim_t()
 a1.init()
 a1.set_values(0, 60)
-a1.set_repeat_count(LV_ANIM_REPEAT_INFINITE)
+a1.set_repeat_count(lv.ANIM_REPEAT.INFINITE)
 a1.set_time(2000)        # 2 sec for 1 turn of the minute hand (1 hour)
 a1.set_var(indic_min)
 a1.set_custom_exec_cb(lambda a1,val: set_value(indic_min,val))

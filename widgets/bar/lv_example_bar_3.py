@@ -3,8 +3,6 @@ import time
 import lvgl as lv
 import display_driver
 
-LV_ANIM_REPEAT_INFINITE = -1
-
 def set_temp(bar, temp):
     bar.set_value(temp, lv.ANIM.ON)
 
@@ -33,7 +31,7 @@ a.set_time(3000)
 a.set_playback_time(3000)
 a.set_var(bar)
 a.set_values(-20, 40)
-a.set_repeat_count(LV_ANIM_REPEAT_INFINITE)
+a.set_repeat_count(lv.ANIM_REPEAT.INFINITE)
 a.set_custom_exec_cb(lambda a, val: set_temp(bar,val))
 lv.anim_t.start(a)
 

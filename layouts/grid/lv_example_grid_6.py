@@ -3,13 +3,11 @@ import time
 import lvgl as lv
 import display_driver
 
-LV_GRID_TEMPLATE_LAST = 24576
-
 #
 # Demonstrate RTL direction on grid
 #
-col_dsc = [60, 60, 60, LV_GRID_TEMPLATE_LAST]
-row_dsc = [40, 40, 40, LV_GRID_TEMPLATE_LAST]
+col_dsc = [60, 60, 60, lv.GRID_TEMPLATE.LAST]
+row_dsc = [40, 40, 40, lv.GRID_TEMPLATE.LAST]
 
 # Create a container with grid
 cont = lv.obj(lv.scr_act())

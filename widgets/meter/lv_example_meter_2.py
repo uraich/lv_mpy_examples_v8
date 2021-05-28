@@ -3,8 +3,6 @@ import time
 import lvgl as lv
 import display_driver
 
-LV_ANIM_REPEAT_INFINITE = -1
-
 def set_value(indic,v):
     meter.set_indicator_end_value(indic, v)
 
@@ -39,7 +37,7 @@ a1.set_repeat_delay(100)
 a1.set_playback_delay(100)
 a1.set_playback_time(500)
 a1.set_var(indic1)
-a1.set_repeat_count(LV_ANIM_REPEAT_INFINITE)
+a1.set_repeat_count(lv.ANIM_REPEAT.INFINITE)
 a1.set_custom_exec_cb(lambda a,val: set_value(indic1,val))
 lv.anim_t.start(a1)
 
@@ -51,7 +49,7 @@ a2.set_repeat_delay(100)
 a2.set_playback_delay(100)
 a2.set_playback_time(1000)
 a2.set_var(indic2)
-a2.set_repeat_count(LV_ANIM_REPEAT_INFINITE)
+a2.set_repeat_count(lv.ANIM_REPEAT.INFINITE)
 a2.set_custom_exec_cb(lambda a,val: set_value(indic2,val))
 lv.anim_t.start(a2)
 

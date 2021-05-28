@@ -4,8 +4,6 @@ import lvgl as lv
 import display_driver
 from imagetools import get_png_info, open_png
 
-LV_ANIM_REPEAT_INFINITE = -1
-
 # Register PNG image decoder
 decoder = lv.img.decoder_create()
 decoder.info_cb = get_png_info
@@ -53,7 +51,7 @@ animimg0 = lv.animimg(lv.scr_act())
 animimg0.center()
 animimg0.set_src(anim_imgs, 3)
 animimg0.set_duration(1000)
-animimg0.set_repeat_count(LV_ANIM_REPEAT_INFINITE)
+animimg0.set_repeat_count(lv.ANIM_REPEAT.INFINITE)
 animimg0.start()
 
 
