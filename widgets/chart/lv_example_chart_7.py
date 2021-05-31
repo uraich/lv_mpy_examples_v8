@@ -9,16 +9,18 @@ def draw_event_cb(e):
         obj = e.get_target()
         ser = obj.get_series_next(None)
         cnt = obj.get_point_count()
+        # print("cnt: ",cnt)
         # Make older value more transparent
         dsc.rect_dsc.bg_opa = (lv.OPA.COVER *  dsc.id) // (cnt - 1)
         
         # Make smaller values blue, higher values red
-        x_array = chart.get_x_array(ser)
-        y_array = chart.get_y_array(ser)
+        # x_array = chart.get_x_array(ser)
+        # y_array = chart.get_y_array(ser)
         # dsc->id is the tells drawing order, but we need the ID of the point being drawn.
         start_point = chart.get_x_start_point(ser)
+        # print("start point: ",start_point)
         p_act = (start_point + dsc.id) % cnt # Consider start point to get the index of the array
-        print("p_act", p_act)
+        # print("p_act", p_act)
         x_opa = (x_array[p_act] * lv.OPA._50) // 200
         y_opa = (y_array[p_act] * lv.OPA._50) // 1000
         
@@ -27,10 +29,16 @@ def draw_event_cb(e):
                                              x_opa + y_opa)
         
 def add_data(timer,chart):
-
-    chart.set_next_value2(chart.get_series_next(chart, None), lv.rand(0,200), lv.rand(0,1000))
-
-
+    # print("add_data")
+    x = lv.rand(0,200)
+    y = lv.rand(0,1000)
+    chart.set_next_value2(ser, x, y)
+    # chart.set_next_value2(chart.gx, y)
+    x_array.pop(0)
+    x_array.append(x)
+    y_array.pop(0)
+    y_array.append(y)
+    
 #
 # A scatter chart
 #
@@ -52,8 +60,15 @@ chart.set_range(lv.chart.AXIS.PRIMARY_Y, 0, 1000)
 chart.set_point_count(50)
 
 ser = chart.add_series(lv.palette_main(lv.PALETTE.RED), lv.chart.AXIS.PRIMARY_Y)
+
+x_array = []
+y_array = []
 for i in range(50):
-    chart.set_next_value2(ser, lv.rand(0, 200), lv.rand(0, 1000))
+    x_array.append(lv.rand(0, 200))
+    y_array.append(lv.rand(0, 1000))
+                        
+ser.x_points = x_array
+ser.y_points = y_array
 
 # Create an `lv_timer` to update the chart.
 
