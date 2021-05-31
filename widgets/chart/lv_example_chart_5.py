@@ -78,7 +78,7 @@ ser = chart.add_series(lv.palette_main(lv.PALETTE.RED), lv.chart.AXIS.PRIMARY_Y)
 
 pcnt = len(ecg_sample)
 chart.set_point_count(pcnt)
-chart.set_ext_array(ser, ecg_sample)
+chart.set_ext_y_array(ser, ecg_sample)
 
 slider = lv.slider(lv.scr_act())
 slider.set_range(lv.IMG_ZOOM.NONE, lv.IMG_ZOOM.NONE * 10)

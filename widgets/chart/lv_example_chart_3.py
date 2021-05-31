@@ -6,7 +6,7 @@ import display_driver
 def draw_event_cb(e):
 
     dsc = lv.obj_draw_part_dsc_t.cast(e.get_param())
-    if dsc.part == lv.PART.TICKS and dsc.id == lv.chart.AXIS.X: 
+    if dsc.part == lv.PART.TICKS and dsc.id == lv.chart.AXIS.PRIMARY_X: 
         month = ["Jan", "Febr", "March", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
         # dsc.text is defined char text[16], I must therefore convert the Python string to a byte_array
         dsc.text = bytes(month[dsc.value],"ascii") 
@@ -25,7 +25,7 @@ chart.set_point_count(12)
 chart.add_event_cb(draw_event_cb, lv.EVENT.DRAW_PART_BEGIN, None)
 
 # Add ticks and label to every axis
-chart.set_axis_tick(lv.chart.AXIS.X, 10, 5, 12, 3, True, 40)
+chart.set_axis_tick(lv.chart.AXIS.PRIMARY_X, 10, 5, 12, 3, True, 40)
 chart.set_axis_tick(lv.chart.AXIS.PRIMARY_Y, 10, 5, 6, 2, True, 50)
 chart.set_axis_tick(lv.chart.AXIS.SECONDARY_Y, 10, 5, 3, 4,True, 50)
 
@@ -51,7 +51,7 @@ chart.set_next_value(ser1, 22)
 chart.set_next_value(ser1, 58)
 
 # Directly set points on 'ser2'
-ser2.points =  [92,71,61,15,21,35,35,58,31,53,33,73]
+ser2.y_points =  [92,71,61,15,21,35,35,58,31,53,33,73]
 
 chart.refresh()  #Required after direct set
 

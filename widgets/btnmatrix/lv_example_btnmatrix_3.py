@@ -3,8 +3,6 @@ import time
 import lvgl as lv
 import display_driver
 
-_LV_RADIUS_CIRCLE = 0x7FFF
-
 def event_cb(e):
     obj = lv.btnmatrix.__cast__(e.get_target())
     id = obj.get_selected_btn()
@@ -37,7 +35,7 @@ style_bg.init()
 style_bg.set_pad_all(0)
 style_bg.set_pad_gap(0)
 style_bg.set_clip_corner(True)
-style_bg.set_radius(_LV_RADIUS_CIRCLE)
+style_bg.set_radius(lv.RADIUS.CIRCLE)
 style_bg.set_border_width(0)
 
 

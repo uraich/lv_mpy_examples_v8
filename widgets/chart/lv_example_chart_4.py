@@ -70,8 +70,8 @@ ser2_p = []
 for i in range(10):
     ser1_p.append(lv.rand(60,90))
     ser2_p.append(lv.rand(10,40))
-ser1.points = ser1_p
-ser2.points = ser2_p
+ser1.y_points = ser1_p
+ser2.y_points = ser2_p
 
 series = [ser1,ser2]
 series_points=[ser1_p,ser2_p]

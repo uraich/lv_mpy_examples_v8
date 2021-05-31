@@ -3,8 +3,6 @@ import time
 import lvgl as lv
 import display_driver
 
-LV_FONT_DEFAULT = lv.font_montserrat_14
-
 class ExampleChart_6():
     
     def __init__(self):
@@ -18,7 +16,7 @@ class ExampleChart_6():
         chart.align(lv.ALIGN.CENTER, 0, -10)
         
         chart.set_axis_tick(lv.chart.AXIS.PRIMARY_Y, 10, 5, 6, 5, True, 40)
-        chart.set_axis_tick(lv.chart.AXIS.X, 10, 5, 10, 1, True, 30)
+        chart.set_axis_tick(lv.chart.AXIS.PRIMARY_X, 10, 5, 10, 1, True, 30)
         
         chart.add_event_cb(self.event_cb, lv.EVENT.ALL, None)
         chart.refresh_ext_draw_size()
@@ -30,10 +28,10 @@ class ExampleChart_6():
         self.ser_p = []
         for i in range(10):
             self.ser_p.append(lv.rand(10,90))
-        self.ser.points = self.ser_p                     
+        self.ser.y_points = self.ser_p                     
 
         newser = chart.get_series_next(None)
-        print("length of data points: ",len(newser.points))
+        # print("length of data points: ",len(newser.points))
         chart.set_zoom_x(500)
 
         label = lv.label(lv.scr_act())
@@ -47,7 +45,7 @@ class ExampleChart_6():
         chart = lv.chart.__cast__(e.get_target())
 
         if code == lv.EVENT.VALUE_CHANGED:
-            print("last_id: ",self.last_id)
+            # print("last_id: ",self.last_id)
             self.last_id = chart.get_pressed_point()
             if self.last_id != lv.CHART_POINT.NONE:
                 p = lv.point_t()
@@ -57,18 +55,18 @@ class ExampleChart_6():
         elif code == lv.EVENT.DRAW_PART_END:
             # print("EVENT.DRAW_PART_END")
             dsc = lv.obj_draw_part_dsc_t.cast(e.get_param())
-            if dsc.p1 and dsc.p2:
-                print("p1, p2", dsc.p1,dsc.p2)
-                print("p1.y, p2.y", dsc.p1.y, dsc.p2.y)
-                print("last_id: ",self.last_id)
+            # if dsc.p1 and dsc.p2:
+                # print("p1, p2", dsc.p1,dsc.p2)
+                # print("p1.y, p2.y", dsc.p1.y, dsc.p2.y)
+                # print("last_id: ",self.last_id)
             if dsc.part == lv.PART.CURSOR and dsc.p1 and dsc.p2 and dsc.p1.y == dsc.p2.y and self.last_id >= 0:
 
                 v = self.ser_p[self.last_id];
      
-                print("value: ",v)
+                # print("value: ",v)
                 value_txt = str(v)
                 size = lv.point_t()
-                lv.txt_get_size(size, value_txt, LV_FONT_DEFAULT, 0, 0, lv.COORD.MAX, lv.TEXT_FLAG.NONE)
+                lv.txt_get_size(size, value_txt, lv.font_default(), 0, 0, lv.COORD.MAX, lv.TEXT_FLAG.NONE)
                 
                 a = lv.area_t()
                 a.y2 = dsc.p1.y - 5

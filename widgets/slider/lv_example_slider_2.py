@@ -3,8 +3,6 @@ import time
 import lvgl as lv
 import display_driver
 
-LV_RADIUS_CIRCLE = 0x7FFF
-
 #
 # Show how to style a slider.
 #
@@ -20,13 +18,13 @@ style_pressed_color = lv.style_t()
 style_main.init()
 style_main.set_bg_opa(lv.OPA.COVER)
 style_main.set_bg_color(lv.color_hex3(0xbbb))
-style_main.set_radius(LV_RADIUS_CIRCLE)
+style_main.set_radius(lv.RADIUS.CIRCLE)
 style_main.set_pad_ver(-2)                 # Makes the indicator larger
 
 style_indicator.init()
 style_indicator.set_bg_opa(lv.OPA.COVER)
 style_indicator.set_bg_color(lv.palette_main(lv.PALETTE.CYAN))
-style_indicator.set_radius(LV_RADIUS_CIRCLE)
+style_indicator.set_radius(lv.RADIUS.CIRCLE)
 style_indicator.set_transition(transition_dsc)
 
 style_knob.init()
@@ -34,7 +32,7 @@ style_knob.set_bg_opa(lv.OPA.COVER)
 style_knob.set_bg_color(lv.palette_main(lv.PALETTE.CYAN))
 style_knob.set_border_color(lv.palette_darken(lv.PALETTE.CYAN, 3))
 style_knob.set_border_width(2)
-style_knob.set_radius(LV_RADIUS_CIRCLE)
+style_knob.set_radius(lv.RADIUS.CIRCLE)
 style_knob.set_pad_all(6)                   # Makes the knob larger
 style_knob.set_transition(transition_dsc)
 
