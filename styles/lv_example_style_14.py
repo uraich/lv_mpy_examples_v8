@@ -20,6 +20,7 @@ def new_theme_init_and_set():
     style_btn.set_border_width(3)
 
     # Initialize the new theme from the current theme
+    '''
     display = lv.scr_act().get_disp()
     th_act = display.get_theme()
     th_new = th_act
@@ -29,7 +30,14 @@ def new_theme_init_and_set():
 
     # Assign the new theme the the current display
     lv.disp_t.set_theme(display, th_new)
+    '''
 
+    th_act = lv.theme_get_from_obj(lv.scr_act())
+    th_new =th_act
+    th_new.set_apply_cb(new_theme_apply_cb)
+    # Activate this theme on default display
+    lv.disp_get_default().set_theme(th_new)
+    
 # 
 # Extending the current theme
 #
