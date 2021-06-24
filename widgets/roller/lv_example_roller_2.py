@@ -23,10 +23,11 @@ style_sel.init()
 try:
     style_sel.set_text_font(lv.font_montserrat_22)
 except:
+    fs_drv = lv.fs_drv_t()
+    fs_driver.fs_register(fs_drv, 'S')
     print("montserrat-22 not enabled in lv_conf.h, dynamically loading the font")
-    font_montserrat_22 = lv.font_load("S:" + "../../assets/font/montserrat-20.bin")
-    print(font_montserrat_22)
-    # style_sel.set_text_font(font_montserrat_22)
+    font_montserrat_22 = lv.font_load("S:../../assets/font/montserrat-22.bin")
+    style_sel.set_text_font(font_montserrat_22)
     
 opts = "\n".join(["1","2","3","4","5","6","7","8","9","10"])
 
