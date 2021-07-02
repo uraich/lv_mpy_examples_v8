@@ -70,7 +70,7 @@ def event_handler(e):
 
     if obj == btn:
         playback = btn.has_state(lv.STATE.CHECKED)
-        anim_timeline.start(playback)
+        lv.anim_timeline_t.start(anim_timeline,playback)
 
     elif obj == slider:
         progress = slider.get_value()
@@ -87,7 +87,7 @@ btn = lv.btn(par)
 btn.add_event_cb(event_handler, lv.EVENT.VALUE_CHANGED, None)
 btn.add_flag(lv.obj.FLAG.IGNORE_LAYOUT)
 btn.add_flag(lv.obj.FLAG.CHECKABLE)
-btn.align(lv.ALIGN.BOTTOM_MID, 0, -20)
+btn.align(lv.ALIGN.BOTTOM_LEFT, 30, -18)
 
 slider = lv.slider(par)
 slider.add_event_cb(event_handler, lv.EVENT.VALUE_CHANGED, None)
