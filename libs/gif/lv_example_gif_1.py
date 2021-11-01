@@ -11,5 +11,4 @@ img = lv.img(lv.scr_act())
 # The File system is attached to letter 'S'
 
 img.set_src("S:bulb.gif")
-img.align(lv.ALIGN.RIGHT_MID, -20, 0)
 img.center()
