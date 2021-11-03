@@ -2,6 +2,11 @@
 import sys
 import lvgl as lv
 import display_driver
+#
+# Load an lottie animation from flash
+#
+from lv_example_rlottie_approve import lv_example_rlottie_approve
 
-lottie = lv.rlottie_create_from_file(lv.scr_act(), 100, 100,"lv_example_rlottie_approve.json")
+lottie = lv.rlottie_create_from_raw(lv.scr_act(), 100, 100, lv_example_rlottie_approve)
 lottie.center()
+
