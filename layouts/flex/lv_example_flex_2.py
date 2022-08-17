@@ -20,7 +20,8 @@ cont.add_style(style, 0)
 for i in range(8):
     obj = lv.obj(cont)
     obj.set_size(70, lv.SIZE.CONTENT)
-
+    obj.add_flag(lv.obj.FLAG.CHECKABLE)
+    
     label = lv.label(obj)
     label.set_text("{:d}".format(i))
     label.center()
