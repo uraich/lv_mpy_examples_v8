@@ -2,7 +2,7 @@
 import lvgl as lv
 import display_driver
 from micropython import const
-import sys
+import sys,struct
 
 # Define a message ID
 MSG_LOGIN_ATTEMPT = const(1)
@@ -11,9 +11,11 @@ MSG_LOGIN_ERROR   = const(3)
 MSG_LOGIN_OK      = const(4)
 
 def auth_manager(m):
-
-    pin_act = lv.msg_get_payload(m)
-    pin_expexted = lv.msg_get_user_data(m)
+    pin_act = m.get_payload()
+    print("pin act: ",pin_act)
+    print("message: ",m)
+    print(m.buffer_p)
+    pin_expexted = m.user_data()
     if pin_act == pin_expected:
         lv.msg_send(MSG_LOGIN_OK, None)
     else:
@@ -26,7 +28,7 @@ def textarea_event_cb(e):
         lv.msg_send(MSG_LOGIN_ATTEMPT, ta.get_text())
     elif code == lv.EVENT.MSG_RECEIVED:
         m = e.get_msg()
-        id = m.msg_get_id()
+        id = m.get_id()
         if id == MSG_LOGIN_ERROR:
             # If there was an error, clean the text area
             if len(lv.msg_get_payload(m)):
@@ -40,12 +42,12 @@ def textarea_event_cb(e):
 
 def log_out_event_cb(e):
     code = e.get_code()
-    if code == lv.EVENT_CLICKED:
+    if code == lv.EVENT.CLICKED:
         lv.msg_send(MSG_LOG_OUT, None)
     elif code == lv.EVENT.MSG_RECEIVED:
-        m = e.get_msg(e)
+        m = e.get_msg()
         btn = e.get_target()
-        id = m.msg_get_id()
+        id = m.get_id()
         if id == MSG_LOGIN_OK:
             btn.clear_state(lv.STATE.DISABLED)
         elif id == MSG_LOG_OUT:
@@ -54,7 +56,7 @@ def log_out_event_cb(e):
 def start_engine_msg_event_cb(e):
 
     m = e.get_msg()
-    btn = e.get_target(e)
+    btn = e.get_target()
     id = m.get_id()
     if id == MSG_LOGIN_OK:
         btn.clear_state(lv.STATE.DISABLED)
@@ -63,7 +65,7 @@ def start_engine_msg_event_cb(e):
 
 
 def info_label_msg_event_cb(e):
-    label = e.get_target(e)
+    label = e.get_target()
     m = e.get_msg()
     id = m.get_id()
     if id ==  MSG_LOGIN_ERROR:
@@ -81,7 +83,7 @@ def info_label_msg_event_cb(e):
 # Simple PIN login screen.
 # No global variables are used, all state changes are communicated via messages.
 
-lv.msg_subscribe_obj(MSG_LOGIN_ATTEMPT, auth_manager, None)
+lv.msg_subscribe(MSG_LOGIN_ATTEMPT, auth_manager, None)
 # lv.msg_subscribe_obj(MSG_LOGIN_ATTEMPT, auth_manager, "Hello")
 
 # Create a slider in the center of the display
@@ -104,13 +106,13 @@ btn = lv.btn(lv.scr_act())
 btn.set_pos(240, 10)
 btn.add_event_cb(log_out_event_cb, lv.EVENT.ALL, None)
 lv.msg_subscribe_obj(MSG_LOGIN_OK, btn, None)
-lv_msg_subscribe_obj(MSG_LOG_OUT, btn, None)
+lv.msg_subscribe_obj(MSG_LOG_OUT, btn, None)
 
 label = lv.label(btn);
 label.set_text("LOG OUT")
 
 # Create a label to show info
-label = lv_label_create(lv_scr_act());
+label = lv.label(lv.scr_act());
 label.set_text("")
 label.add_event_cb(info_label_msg_event_cb, lv.EVENT.MSG_RECEIVED, None)
 label.set_pos(10, 60)
@@ -119,14 +121,14 @@ lv.msg_subscribe_obj(MSG_LOGIN_OK, label, None)
 lv.msg_subscribe_obj(MSG_LOG_OUT, label, None)
 
 #Create button which will be active only when logged in
-btn = lv_btn(lv.scr_act())
+btn = lv.btn(lv.scr_act())
 btn.set_pos(10, 80)
 btn.add_event_cb(start_engine_msg_event_cb, lv.EVENT.MSG_RECEIVED, None)
-btn.add_flag(lv.OBJ.FLAG_CHECKABLE)
+btn.add_flag(lv.obj.FLAG.CHECKABLE)
 lv.msg_subscribe_obj(MSG_LOGIN_OK, btn, None)
 lv.msg_subscribe_obj(MSG_LOG_OUT, btn, None)
 
-label = lv_label_create(btn)
+label = lv.label(btn)
 label.set_text("START ENGINE")
 
 lv.msg_send(MSG_LOG_OUT, None)

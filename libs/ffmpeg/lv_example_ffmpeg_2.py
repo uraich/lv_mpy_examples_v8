@@ -1,4 +1,4 @@
-#!/opt/bin/lv_micropython -i
+#!/opt/bin/lv_micropython-ffmpeg -i
 import sys
 import lvgl as lv
 import display_driver
@@ -11,8 +11,7 @@ import display_driver
 # https://www.videezy.com/abstract/44864-silhouettes-of-birds-over-the-sunset
 player = lv.ffmpeg_player(lv.scr_act())
 player.player_set_src("birds.mp4")
-#  lv_ffmpeg_player_set_src(player, "/opt/ucc/micros/esp32/lvgl/simulator-V8/lvgl/examples/libs/ffmpeg/birds.mp4");
 player.player_set_auto_restart(True)
-cmd = lv.FFMPEG_PLAYER_CMD.START
-player.player_set_cmd(lv.FFMPEG_PLAYER_CMD.START)
+# player.player_set_cmd(lv.FFMPEG_PLAYER_CMD.START)
+player.player_set_cmd(0)
 player.center()
