@@ -10,28 +10,37 @@ MSG_LOG_OUT       = const(2)
 MSG_LOGIN_ERROR   = const(3)
 MSG_LOGIN_OK      = const(4)
 
-def auth_manager(m):
-    pin_act = m.get_payload()
-    print("pin act: ",pin_act)
-    print("message: ",m)
-    print(m.buffer_p)
-    pin_expexted = m.user_data()
+# Define the object that will be sent as msg payload
+class Message:
+    def __init__(self, value):
+        self.value = value
+    def message(self):
+        return self.value
+        
+def auth_manager(m,passwd):
+    payload = m.get_payload()
+    pin_act = payload.__cast__().message()
+    # print("pin act: ",pin_act,end="")
+    # print(", pin axpected: ",passwd)
+    pin_expected = passwd
     if pin_act == pin_expected:
         lv.msg_send(MSG_LOGIN_OK, None)
     else:
-        lv.msg_send(MSG_LOGIN_ERROR, "Incorrect PIN")
+        lv.msg_send(MSG_LOGIN_ERROR, Message("Incorrect PIN"))
 
 def textarea_event_cb(e):
     ta = e.get_target()
     code = e.get_code()
     if code == lv.EVENT.READY:
-        lv.msg_send(MSG_LOGIN_ATTEMPT, ta.get_text())
+        passwd = Message(ta.get_text())
+        lv.msg_send(MSG_LOGIN_ATTEMPT, passwd)
     elif code == lv.EVENT.MSG_RECEIVED:
         m = e.get_msg()
         id = m.get_id()
         if id == MSG_LOGIN_ERROR:
             # If there was an error, clean the text area
-            if len(lv.msg_get_payload(m)):
+            msg = m.get_payload().__cast__()
+            if len(msg.message()):
                    ta.set_text("")
         elif id == MSG_LOGIN_OK:
             ta.add_state(lv.STATE.DISABLED)
@@ -69,7 +78,8 @@ def info_label_msg_event_cb(e):
     m = e.get_msg()
     id = m.get_id()
     if id ==  MSG_LOGIN_ERROR:
-        label.set_text(m.get_payload())
+        payload = m.get_payload()
+        label.set_text(payload.__cast__().message())
         label.set_style_text_color(lv.palette_main(lv.PALETTE.RED), 0)
     elif id == MSG_LOGIN_OK:
         label.set_text("Login successful")
@@ -78,12 +88,13 @@ def info_label_msg_event_cb(e):
         label.set_text("Logged out")
         label.set_style_text_color(lv.palette_main(lv.PALETTE.GREY), 0)
 
-
+def register_auth(msg_id,auth_msg):
+    lv.msg_subscribe(MSG_LOGIN_ATTEMPT, lambda m: auth_msg(m,"hello"), None)
 #
 # Simple PIN login screen.
 # No global variables are used, all state changes are communicated via messages.
 
-lv.msg_subscribe(MSG_LOGIN_ATTEMPT, auth_manager, None)
+register_auth(MSG_LOGIN_ATTEMPT,auth_manager)
 # lv.msg_subscribe_obj(MSG_LOGIN_ATTEMPT, auth_manager, "Hello")
 
 # Create a slider in the center of the display
